@@ -3,8 +3,8 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"strings"
+	"utils"
 )
 
 type slope struct {
@@ -16,11 +16,7 @@ func newSlope(right int, down int) slope{
   return slope{right: right, down: down}
 }
 
-func check(e error) {
-  if e != nil {
-    panic(e)
-  }
-}
+const treeSymbol string = "#"
 
 func processInput(input string) [] [] string {
   plan := [][]string{}
@@ -46,7 +42,7 @@ func getSolution(plan [][]string, slopes []slope) []int{
       col = (col + s.right) % len(line)
       row = row + s.down
 
-      if plan[row][col] == "#" {
+      if plan[row][col] == treeSymbol {
         trees++
       }
     }
@@ -56,15 +52,12 @@ func getSolution(plan [][]string, slopes []slope) []int{
   return results
 }
 
+// RunDay3 Main runner for day 3
 func main() {
-  data, err := ioutil.ReadFile("./inputs/day_3_input.txt")
-  check(err)
-
-  plan := processInput(string(data))
+  plan := processInput(utils.LoadFile("input.txt"))
 
   // slopesPart1 := []slope{newSlope(3, 1)}
-
-  slopesPart2 := []slope{newSlope(1, 1), newSlope(3, 1), newSlope(5, 1), newSlope(7, 1), newSlope(1,g p 2)}
+  slopesPart2 := []slope{newSlope(1, 1), newSlope(3, 1), newSlope(5, 1), newSlope(7, 1), newSlope(1, 2)}
 
   solutions := getSolution(plan, slopesPart2)
 

@@ -1,27 +1,19 @@
 // Advent Calendar day 1 - https://adventofcode.com/2020/day/1
-
 package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"strconv"
 	"strings"
+	"utils"
 )
 
-
-func check(e error) {
-  if e != nil {
-    panic(e)
-  }
-}
-
-func processInput(input string) []int{
+func processInput(input string) [] int{
   res := [] int{}
 
   for _, val := range strings.Split(input, "\n") {
     iVal, err := strconv.Atoi(val)
-    check(err)
+    utils.Check(err)
     res = append(res, iVal)
   }
 
@@ -55,10 +47,7 @@ func threeSum(input []int, numbers map[int]bool, target int) (int, error){
 }
 
 func main(){
-  data, err := ioutil.ReadFile("./inputs/day_1_input.txt")
-  check(err)
-
-  input := processInput(string(data))
+  input := processInput(utils.LoadFile("input.txt"))
 
   numbers := map[int]bool{}
 
@@ -67,6 +56,7 @@ func main(){
   }
 
   solution, err := threeSum(input, numbers, 2020)
-  check(err)
+  utils.Check(err)
+
   fmt.Println("Solution:", solution)
 }

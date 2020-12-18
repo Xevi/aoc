@@ -1,12 +1,11 @@
 // Advent Calendar day 2 - https://adventofcode.com/2020/day/2
-
 package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"strconv"
 	"strings"
+	"utils"
 )
 
 type policy struct {
@@ -21,9 +20,9 @@ func newPolicy(policySection string) policy {
   minMax := strings.Split(sections[0], "-")
 
   min, err := strconv.Atoi(minMax[0])
-  check(err)
+  utils.Check(err)
   max, err := strconv.Atoi(minMax[1])
-  check(err)
+  utils.Check(err)
 
   return policy{letter: letter, min: min, max: max}
 }
@@ -35,12 +34,6 @@ type password struct {
 
 func newPassword(policySection string, passwordSection string) password {
   return password{policy: newPolicy(policySection), password: strings.Trim(passwordSection, " ")}
-}
-
-func check(e error) {
-  if e != nil {
-    panic(e)
-  }
 }
 
 func processInput(data string) [] password{
@@ -77,11 +70,9 @@ func isPasswordCorrect2(password password) bool{
   return valid
 }
 
+// RunDay2 Main runner for day 2
 func main(){
-  data, err := ioutil.ReadFile("./inputs/day_2_input.txt")
-  check(err)
-
-  passwords := processInput(string(data))
+  passwords := processInput(utils.LoadFile("input.txt"))
 
   sum := 0
   for _, password := range passwords {
