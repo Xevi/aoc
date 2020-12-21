@@ -7,75 +7,75 @@ import (
 )
 
 func processInput(entries string) [][]string{
-	results := [][]string{}
-	for _, group := range strings.Split(entries, "\n\n"){
-		results = append(results, strings.Split(group, "\n"))
-	}
+  results := [][]string{}
+  for _, group := range strings.Split(entries, "\n\n"){
+    results = append(results, strings.Split(group, "\n"))
+  }
 
-	return results
+  return results
 }
 
 func countAnyoneYes(group []string) int{
-	yesMap := map[string]bool{}
-	sum := 0
+  yesMap := map[string]bool{}
+  sum := 0
 
-	for _, answers := range group{
-		for _, answer := range strings.Split(answers, ""){
-			_, alreadyIn := yesMap[answer]
+  for _, answers := range group{
+    for _, answer := range strings.Split(answers, ""){
+      _, alreadyIn := yesMap[answer]
 
-			if !alreadyIn {
-				yesMap[answer] = true
-				sum++
-			}
-		}
-	}
+      if !alreadyIn {
+        yesMap[answer] = true
+        sum++
+      }
+    }
+  }
 
-	return sum
+  return sum
 }
 
 func countEvereyoneYes(group []string) int{
-	yesMap := map[string]int{}
+  yesMap := map[string]int{}
 
-	for _, answers := range group{
-		for _, answer := range strings.Split(answers, ""){
-			_, alreadyIn := yesMap[answer]
+  for _, answers := range group{
+    for _, answer := range strings.Split(answers, ""){
+      _, alreadyIn := yesMap[answer]
 
-			if !alreadyIn {
-				yesMap[answer] = 1
-			}else{
-				yesMap[answer]++
-			}
-		}
-	}
+      if !alreadyIn {
+        yesMap[answer] = 1
+      }else{
+        yesMap[answer]++
+      }
+    }
+  }
 
-	sum := 0
-	groupLen := len(group)
-	for _, numYes := range yesMap {
-		if(numYes == groupLen){
-			sum++
-		}
-	}
+  sum := 0
+  groupLen := len(group)
+  for _, numYes := range yesMap {
+    if(numYes == groupLen){
+      sum++
+    }
+  }
 
-	return sum
+  return sum
 }
 
 func getSolution(groups [][]string, count func(group []string) int) int{
-	sum := 0
-	for _, group := range groups {
-		sum = sum + count(group)
-	}
+  sum := 0
+  for _, group := range groups {
+    sum = sum + count(group)
+  }
 
-	return sum
+  return sum
 }
 
 func main(){
-	groups := processInput(utils.LoadFile("input.txt"))
+  groups := processInput(utils.LoadFile("input.txt"))
 
-	solution1 := getSolution(groups, countAnyoneYes)
+  solution1 := getSolution(groups, countAnyoneYes)
 
-	fmt.Println("Solution1:", solution1)
+  fmt.Println("Solution1:", solution1)
 
-	solution2 := getSolution(groups, countEvereyoneYes)
+  solution2 := getSolution(groups, countEvereyoneYes)
 
-	fmt.Println("Solution2:", solution2)
+  fmt.Println("Solution2:", solution2)
 }
